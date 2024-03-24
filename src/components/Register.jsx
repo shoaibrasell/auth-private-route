@@ -1,12 +1,27 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../provider/AuthProvider';
 
 const Register = () => {
+  
+  const {createUser} = useContext(AuthContext);
+
   const handleRegister = (e) => {
     e.preventDefault();
+    const name = e.target.name.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log(email, password);
+    console.log(email, password , name);
+    
+    //Create user in firebase
+    createUser(email , password)
+    .then(result =>{
+      console.log(result.user)
+    })
+    .catch(error =>{
+      console.error(error);
+    })
+
   };
   return (
     <div className="hero min-h-screen bg-base-300">
@@ -17,12 +32,24 @@ const Register = () => {
         <form onSubmit={handleRegister} className="card-body">
           <div className="form-control">
             <label className="label">
+              <span className="label-text">Name</span>
+            </label>
+            <input
+              type="text"
+              name="Name"
+              placeholder="Name"
+              className="input input-bordered"
+              required
+            />
+          </div>
+          <div className="form-control">
+            <label className="label">
               <span className="label-text">Email</span>
             </label>
             <input
               type="email"
               name="email"
-              placeholder="email"
+              placeholder="Your Email"
               className="input input-bordered"
               required
             />
@@ -33,7 +60,7 @@ const Register = () => {
             </label>
             <input
               type="password"
-              placeholder="password"
+              placeholder="Password"
               name="password"
               className="input input-bordered"
               required
@@ -45,7 +72,7 @@ const Register = () => {
             </label>
           </div>
           <div className="form-control mt-6">
-            <button className="btn btn-primary">Login</button>
+            <button className="btn btn-primary">Register</button>
           </div>
         </form>
         <p className="ml-4">

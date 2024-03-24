@@ -1,15 +1,25 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import { AuthContext } from '../provider/AuthProvider';
 
 const Navbar = () => {
+
+  const { user , logOut } = useContext(AuthContext);
+
+  const handleLogOut = () =>{
+    logOut()
+    .then(() => console.log('User logged out Successfully !'))
+    .catch(error => console.error(error))
+  }
+
   const navLinks= <>
-    <li><NavLink to='/'>Home</NavLink></li>
-    <li><NavLink to='/login'>Login</NavLink></li>
-    <li><NavLink to='/register'>Register</NavLink></li>
-    <li><NavLink to='/about'>About</NavLink></li>
+    <li className='text-xl'><NavLink to='/'>Home</NavLink></li>
+    <li className='text-xl'><NavLink to='/login'>Login</NavLink></li>
+    <li className='text-xl'><NavLink to='/register'>Register</NavLink></li>
+    <li className='text-xl'><NavLink to='/about'>About</NavLink></li>
   </>
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-emerald-300">
   <div className="navbar-start">
     <div className="dropdown">
       <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -19,13 +29,26 @@ const Navbar = () => {
         {navLinks}
       </ul>
     </div>
-    <a className="btn btn-ghost text-xl">Auth_Private_Practics</a>
+    <a className="btn btn-ghost text-3xl">Auth_Private_Practics</a>
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1">
       {navLinks}
     </ul>
   </div>
+    {/* Conditional Rendering */}
+    <div className="navbar-end">
+      {
+        user ? <>
+          <span>{user.email}</span>
+          <a onClick={handleLogOut} className='btn btn-sm'>Sign Out</a>
+        </>
+        :
+         <Link to='/login'>
+          <button className='btn btn-sm'>Login</button>
+        </Link>
+      } 
+    </div>
 </div>
   );
 };
