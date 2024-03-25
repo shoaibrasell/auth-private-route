@@ -16,6 +16,7 @@ const Navbar = () => {
     <li className='text-xl'><NavLink to='/'>Home</NavLink></li>
     <li className='text-xl'><NavLink to='/login'>Login</NavLink></li>
     <li className='text-xl'><NavLink to='/register'>Register</NavLink></li>
+    <li className='text-xl'><NavLink to='/orders'>Orders</NavLink></li>
     <li className='text-xl'><NavLink to='/about'>About</NavLink></li>
   </>
   return (
